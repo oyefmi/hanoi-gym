@@ -1,5 +1,5 @@
 import gym
-import gym import error, spaces, utils
+from gym import error, spaces, utils
 from gym.utils import seeding
 
 import random
