@@ -5,7 +5,7 @@ except ImportError:
 
 setup(name = 'hanoi_gym',
       version = '0.0.1',
-      packages = find_packages()
+      packages = find_packages(),
       author = 'Michael Oyefusi',
       url = "https://github.com/oyefmi/hanoi-gym",
       install_requires = ['numpy', 'gym']
