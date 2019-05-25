@@ -1,3 +1,5 @@
+from setuptools import setup
+
 setup(name = 'hanoi_gym',
       version = '0.0.1',
       author = 'Michael Oyefusi',
