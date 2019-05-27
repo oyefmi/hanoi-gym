@@ -28,9 +28,6 @@ class HanoiEnv(gym.Env):
       next_state = list(self.state)
       next_state[disk_to_move] = move[1]
       self.state = tuple(next_state)
-    else:
-      print("Invalid action")
-      break
       
     if self.state == self.goal:
       reward = 100
