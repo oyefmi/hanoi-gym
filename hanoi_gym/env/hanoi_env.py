@@ -30,6 +30,7 @@ class HanoiEnv(gym.Env):
       self.state = tuple(next_state)
     else:
       print("Invalid action")
+      break
       
     if self.state == self.goal:
       reward = 100
