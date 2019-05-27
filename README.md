@@ -2,6 +2,7 @@
 Open AI gym implementation of Towers of Hanoi
 
 Project also contains an implementation of Deep Reinforcment Learning using a Deep Q Network on the Towers of Hanoi environment.
+hanoi_DQN.py
 
 In order to import this project to your local machine, follow these steps:
   1. open terminal and go to the directory you want to use
