@@ -74,16 +74,16 @@ if __name__ == "__main__":
         num_moves = 0 #the total number of moves it takes to solve the puzzle
         done = False
 
-        for i in range(episodes):
-            num_moves += 1
-            state = env.reset()
-            while not done:
-                action = dqn_hanoi.act(state)
-                next_state, reward, done = env.step(action)
-                dqn_hanoi.remember(state, action, reward, next_state, done)
-                state = next_state
+    #for i in range(episodes):
+        num_moves += 1
+        state = env.reset()
+        while not done:
+            action = dqn_hanoi.act(state)
+            next_state, reward, done = env.step(action)
+            dqn_hanoi.remember(state, action, reward, next_state, done)
+            state = next_state
 
-            print("Number of moves to solve: " + num_moves)
+        print("Number of moves to solve: " + num_moves)
 
-            if len(dqn_agent.memory) > batch_size:
-                dqn_hanoi.replay(batch_size)
+        if len(dqn_agent.memory) > batch_size:
+            dqn_hanoi.replay(batch_size)
