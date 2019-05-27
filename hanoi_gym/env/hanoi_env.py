@@ -29,6 +29,8 @@ class HanoiEnv(gym.Env):
       next_state[disk_to_move] = move[1]
       self.state = tuple(next_state)
       
+      return
+      
     if self.state == self.goal:
       reward = 100
       self.finished = True
