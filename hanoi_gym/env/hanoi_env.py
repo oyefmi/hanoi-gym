@@ -42,7 +42,7 @@ class HanoiEnv(gym.Env):
   
   # method to check which disks, if any, disks are on a given peg
   def disks_on_peg(self, peg):
-    return [disk for disk in range (self.disk_num) if self.current_state[disk] == peg]
+    return [disk for disk in range (self.disk_num) if self.state[disk] == peg]
   
   #checks if an action is allowed for the given state
   def move_allowed(self, move):
