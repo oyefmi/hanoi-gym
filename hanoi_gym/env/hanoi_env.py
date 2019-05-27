@@ -31,7 +31,7 @@ class HanoiEnv(gym.Env):
     move = self.action_to_move[action]
 
     if self.move_allowed(move):
-      disk_to_move = min(self.disks_on_peg(tuple(move[0])))
+      disk_to_move = min(self.disks_on_peg(move[0]))
       next_state = list(self.state)
       next_state[disk_to_move] = move[1]
       self.state = tuple(next_state)
