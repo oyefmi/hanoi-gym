@@ -24,9 +24,6 @@ class Agent:
         self.learning_rate = 0.1
         self.model = self.neural_net
 
-    def remember(self, state, action, reward, next_state, done):
-        self.memory.append((state, action, reward, next_state, done))
-
     def neural_net(self):
         model = Sequential()
 
@@ -34,10 +31,12 @@ class Agent:
         model.add(Dense(27, activation = 'relu'))
         model.add(Dense(self.action_size, activation = 'linear'))
         model.compile(loss = 'mse', optimizer = Adam(learn = self.learning_rate))
-
+    
+    # function to keep track of the previous experiences of the agent at a given state
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
-
+    
+    # decides how the agent will act based on the epsilon greedy policy
     def act(self, state):
         if np.random.rand() < self.epsilon:
             return random.randrange(len(self.action_size))
@@ -45,7 +44,8 @@ class Agent:
         act_values = self.model.predict(state)
 
         return np.argmax(act_values[0])  # returns action
-
+    
+    # takes samples to train the neural net based on past experiences
     def replay(self, batch_size):
         minibatch = random.sample(self.memory, batch_size)
 
@@ -68,14 +68,14 @@ if __name__ == "__main__":
         action_size = env.observation_space
         state_size = env.action_space
         dqn_hanoi = Agent(state_size, action_size)
-        count = 0
+        num_moves = 0 
         batch_size = 30
         episodes = 500
         num_moves = 0 #the total number of moves it takes to solve the puzzle
         done = False
 
         for i in range(episodes):
-            count += 1
+            num_moves += 1
             state = env.reset()
             while not done:
                 action = dqn_hanoi.act(state)
@@ -83,7 +83,7 @@ if __name__ == "__main__":
                 dqn_hanoi.remember(state, action, reward, next_state, done)
                 state = next_state
 
-            print("Number of moves to solve: " + count)
+            print("Number of moves to solve: " + num_moves)
 
             if len(dqn_agent.memory) > batch_size:
                 dqn_hanoi.replay(batch_size)
