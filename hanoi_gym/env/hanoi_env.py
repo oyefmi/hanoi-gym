@@ -3,7 +3,6 @@ from gym import error, spaces, utils
 from gym.utils import seeding
 
 import random
-import itertools
 import numpy as np
 
 class HanoiEnv(gym.Env):
