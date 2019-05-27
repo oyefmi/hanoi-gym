@@ -22,7 +22,7 @@ class HanoiEnv(gym.Env):
     self.finished = None
     
   def step(self, action):
-    move = action_to_move[action]
+    move = self.action_to_move[action]
     
     if self.move_allowed(move):
       disk_to_move = min(self.disks_on_peg(move[0]))
