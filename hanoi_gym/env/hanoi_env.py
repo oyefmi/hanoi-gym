@@ -15,28 +15,29 @@ class HanoiEnv(gym.Env):
   #  4 : "(2,0) - top disk of pole 2 to top of pole 0",
   #  5 : "(2,1) - top disk of pole 2 to top of pole 1"}                            
 
-  action_to_move = [(0, 1), (0, 2), (1, 0),
+  action_list = [(0, 1), (0, 2), (1, 0),
                   (1, 2), (2, 0), (2, 1)]
 
   def __init__(self):
     self.disk_num = 3
     self.action_space = spaces.Discrete(6)
-    self.observation_space = spaces.Tuple(self.disk_num * (spaces.Discrete(3),))
+    self.observation_space = spaces.Tuple(self.disk_num * (spaces.Discrete(3),)) # state space
 
-    self.state = None
-    self.goal = self.disk_num * (2,)
-    self.finished = None
-
+    self.state = None # current state
+    self.goal = self.disk_num * (2,) # goal state
+    self.finished = None 
+  
+  # take next action if move is allowed
   def step(self, action):
-    move = self.action_to_move[action]
+    move = self.action_list[action]
 
     if self.move_allowed(move):
       disk_to_move = min(self.disks_on_peg(move[0]))
       next_state = list(self.state)
       next_state[disk_to_move] = move[1]
       self.state = tuple(next_state)
-
-      return
+    else:
+      print("Invalid action")
 
     if self.state == self.goal:
       reward = 100
@@ -55,7 +56,8 @@ class HanoiEnv(gym.Env):
   def move_allowed(self, move):
     disks_from = self.disks_on_peg(move[0])
     disks_to = self.disks_on_peg(move[1])
-
+  
+  # reset environment 
   def reset(self):
     self.state = self.disk_num * (0,)
     self.finished = False
