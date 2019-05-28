@@ -56,8 +56,8 @@ class HanoiEnv(gym.Env):
     def move_allowed(self, move):
         disks_from = self.disks_on_peg(move[0])
         disks_to = self.disks_on_peg(move[1])
-        if discs_from:
-            return (min(discs_to) > min(discs_from)) if discs_to else True
+        if disks_from:
+            return (min(disks_to) > min(disks_from)) if disks_to else True
         else:
             return False
         
