@@ -2,6 +2,7 @@
 Open AI gym implementation of Towers of Hanoi
 
 In order to import this project to your local machine, follow these steps:
+
 	1. open terminal and go to the directory you want to use
 	2. once you have your working directory, type: 
 		git clone https://github.com/oyefmi/hanoi-gym.git
@@ -13,3 +14,4 @@ Project also contains an implementation of Deep Reinforcment Learning using a De
 	- hanoi_DQN.py
 
 state space graph representation:
+
