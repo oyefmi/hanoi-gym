@@ -13,6 +13,6 @@ Project also contains an implementation of Deep Reinforcment Learning using a De
 
 	- hanoi_DQN.py
 
-state space graph representation:
+state space graph representation of Tower of Hanoi with 3 disks:
 
 ![alt text](https://github.com/oyefmi/hanoi-gym/blob/master/ToH_stategraph.png)
