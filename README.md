@@ -15,3 +15,4 @@ Project also contains an implementation of Deep Reinforcment Learning using a De
 
 state space graph representation:
 
+![alt text](https://github.com/oyefmi/hanoi-gym/blob/master/ToH_stategraph.png)
