@@ -51,10 +51,10 @@ class Agent:
             return random.randrange(6)
         else:
             # exploit
-            act_values = self.model.predict(curr_st)
-            return np.argmax(act_values[0])  # returns action
+            q_values = self.model.predict(curr_st)
+            return np.argmax(q_values[0])  # returns action
     
-    # takes samples to train the neural net based on past experiences
+    # takes samples of the agent's experience in order to update Q-values
     def replay(self, batch_size):
         minibatch = random.sample(self.memory, batch_size)
 
@@ -71,7 +71,6 @@ class Agent:
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
-
 if __name__ == "__main__":
         env = gym.make('Hanoi-v0')
         action_size = env.observation_space
@@ -79,24 +78,51 @@ if __name__ == "__main__":
         dqn_hanoi = Agent(state_size, action_size)
         num_moves = 0 
         batch_size = 30
-        episodes = 500
-        test = 25
-        num_moves = 0 # the total number of moves it takes to solve the puzzle
+        episodes = 100
+        test = 10
         done = False
+        training_list = []
+        test_list = []
 
-        # train model
+        # train model while iteratively updating q_values
         for t in range(episodes):
+            num_moves = 0  # the total number of moves it takes to solve the puzzle
             state = env.reset()
-            num_moves += 1
-            action = dqn_hanoi.act(state)
-            next_state, reward, done = env.step(action)
-            dqn_hanoi.remember(state, action, reward, next_state, done)
-            state = next_state
+            done = False
+
+            while not done:
+                num_moves += 1
+                action = dqn_hanoi.act(state)
+                next_state, reward, done = env.step(action)
+                dqn_hanoi.remember(state, action, reward, next_state, done)
+                state = next_state
 
             if done:
                 print("Number of moves to solve: " + str(num_moves))
+                training_list.append(num_moves)
+                if len(dqn_hanoi.memory) > batch_size:
+                    dqn_hanoi.replay(batch_size)
 
-        # test of model
-        for i in range(25):
+        training_average = sum(training_list) / episodes
+        print("\n" + "Average number of moves for training model " + str(training_average)
+              + "\n" + "\n")
 
-            dqn_hanoi.replay(batch_size)
+        # test model performance
+        for t in range(test):
+            num_moves = 0  # the total number of moves it takes to solve the puzzle
+            state = env.reset()
+            done = False
+
+            while not done:
+                num_moves += 1
+                action = dqn_hanoi.act(state)
+                next_state, reward, done = env.step(action)
+                dqn_hanoi.remember(state, action, reward, next_state, done)
+                state = next_state
+
+            if done:
+                print("Number of moves to solve: " + str(num_moves))
+                test_list.append(num_moves)
+
+        test_average = sum(test_list) / test
+        print("\n" + "Average number of moves for test model " + str(test_average))
