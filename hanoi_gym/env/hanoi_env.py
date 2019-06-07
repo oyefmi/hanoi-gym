@@ -24,12 +24,16 @@ class HanoiEnv(gym.Env):
     action_list = [(0, 1), (0, 2), (1, 0),
                    (1, 2), (2, 0), (2, 1)]
 
+    """
+    
+    List that gives the index for the disks
+    
+    0 is the largest disk
+    2 is the largest disk
+    
+    """
+
     disk_index = [0, 1, 2]
-    # dictionary that maps the disks to there corresponding state within the
-    # state space representation
-    disk_dict = {0: disk_index[2],
-                 1: disk_index[1],
-                 2: disk_index[0]}
 
     def __init__(self):
         self.disk_num = 3
@@ -71,8 +75,10 @@ class HanoiEnv(gym.Env):
         if self.state == self.goal:
             reward = 100
             self.finished = True
+        elif info == {"invalid_action": True}:
+            reward = -10
         else:
-            reward = -1
+            reward = 0
 
         return self.state, reward, self.finished
 
@@ -101,7 +107,7 @@ class HanoiEnv(gym.Env):
         disks_to = self.disks_on_peg(move[1])
 
         if disks_from:
-            return (min(disks_to) > min(disks_from)) if disks_to else True
+            return (self.disk_index[min(disks_to)] < self.disk_index[min(disks_from)]) if disks_to else True
         else:
             return False
 
